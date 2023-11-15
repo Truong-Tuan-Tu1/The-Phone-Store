@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TStore</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TStore.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    
+</head>
+<body>
+    <header id="header-admin">
+        <div class="wrapper-header">
+            <div class="header__left">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm từ khóa.." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" title="Tìm kiếm">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="header__right">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </header>
+    <div class="wrapper-main" style="min-height: 100vh;height: 100%;">
+        <section class="sidebar " id="sidebar-admin">
+            <a href="/Admin" class="logo">
+                Admintor
+            </a>
+            <div class="">
+                <ul class="sidebar__list">
+                    <li class="sidebar__item sidebar__item--dashboard">
+                        <a href="/Admin" class="sidebar__link"><i class="bi bi-speedometer"></i> <span>Bảng điều khiển</span> </a>
+                    </li>
+                </ul>
+
+                <div class="group-menu">
+                    <span class="sidebar__title">
+                        <i class="bi bi-table"></i>
+                        Các bảng
+                    </span>
+
+                    <ul class="sidebar__list">
+                        <li class="sidebar__item">
+                            <p class="sidebar__link"><i class="bi bi-collection"></i> <span>Danh mục sản phẩm</span> <i class="bi bi-caret-down"></i> </p>
+                                <ul class="sidebar__sub-list">
+                                    <li class="sidebar__sub-item">
+                                        <a href="/Admin/ProductCategories"  class="sidebar__sub-link"><i class="bi bi-easel"></i> <span>Tất cả</span> </a>
+                                    </li>
+                                    <li class="sidebar__sub-item">
+                                        <a href="/Admin/ProductCategories/Create" class="sidebar__sub-link"><i class="bi bi-plus-circle"></i> <span>Tạo mới</span> </a>
+                                    </li>
+                                </ul>
+                        </li>
+                        <li class="sidebar__item">
+                            <p  class="sidebar__link"><i class="bi bi-phone"></i> <span>Sản phẩm</span> <i class="bi bi-caret-down"></i> </p>
+                            <ul class="sidebar__sub-list">
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Product"  class="sidebar__sub-link"><i class="bi bi-easel"></i> <span>Tất cả</span> </a>
+                                </li>
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Product/Create" class="sidebar__sub-link"><i class="bi bi-plus-circle"></i> <span>Tạo mới</span> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar__item">
+                            <p  class="sidebar__link"><i class="bi bi-briefcase"></i> <span>Nhãn hiệu</span> <i class="bi bi-caret-down"></i> </p>
+                            <ul class="sidebar__sub-list">
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Brand"  class="sidebar__sub-link"><i class="bi bi-easel"></i> <span>Tất cả</span> </a>
+                                </li>
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Brand/Create" class="sidebar__sub-link"><i class="bi bi-plus-circle"></i> <span>Tạo mới</span> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar__item">
+                            <p  class="sidebar__link"><i class="bi bi-house-door"></i> <span>Nhà cung cấp</span> <i class="bi bi-caret-down"></i> </p>
+                            <ul class="sidebar__sub-list">
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Supplier"  class="sidebar__sub-link"><i class="bi bi-easel"></i> <span>Tất cả</span> </a>
+                                </li>
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Supplier/Create" class="sidebar__sub-link"><i class="bi bi-plus-circle"></i> <span>Tạo mới</span> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar__item">
+                            <p  class="sidebar__link"><i class="bi bi-bag"></i> <span>Đơn hàng</span> <i class="bi bi-caret-down"></i> </p>
+                            <ul class="sidebar__sub-list">
+                                <li class="sidebar__sub-item">
+                                    <a href="/Admin/Order"  class="sidebar__sub-link"><i class="bi bi-easel"></i> <span>Tất cả</span> </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group-menu">
+                    <span class="sidebar__title">
+                      <i class="bi bi-segmented-nav"></i>
+                        Giới thiệu trang
+                    </span>
+
+                    <ul class="sidebar__list">
+                        <li class="sidebar__item">
+                            <a href="/Admin/About" class="sidebar__link"><i class="bi bi-eye"></i> <span>Xem trước</span> </a>
+                        </li>
+                        <li class="sidebar__item">
+                            <a href="/Admin/About/Edit" class="sidebar__link"><i class="bi bi-pencil-square"></i> <span>Chỉnh sửa</span> </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        <main class="wrapper-content">
+            <partial name="_Toast" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-sortable/query-sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tiny.cloud/1/vowdupnl2rzb1b2k7m4spwrslnhk7hvzzbsoswo93yxcrh94/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <partial name="_HandleAlert" />
+    <script src="~/js/handleConvertNumberToMoney.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

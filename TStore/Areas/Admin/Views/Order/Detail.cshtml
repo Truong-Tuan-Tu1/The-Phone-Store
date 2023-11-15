@@ -1,0 +1,73 @@
+﻿@model IEnumerable<OrderDetail>
+<section class="container" id="detail">
+    <button class="btn btn-sm btn-primary float-end" id="btnPrint">
+        <i class="bi bi-download"></i> In hóa đơn
+    </button>
+    <h1 class="text-center">
+        Thông tin đơn hàng
+    </h1>
+    <hr/>
+    <div class="row">
+        <div class="col-6">
+            <div class="">
+                <span>Họ tên khách hàng: </span> <strong>Lê Trần Tấn Tài</strong>
+                <br />
+                <span>Địa chỉ khách hàng: </span> <strong>B22/10 HCM</strong>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="">
+                <span>Ngày đặt hàng: </span> <strong>30/10/2023</strong>
+            </div>
+        </div>
+    </div>
+    <br />
+    <h4>Sản phẩm: </h4>
+    <br/>
+    <table class="table table-hover table-bordered table-image table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Tổng giá sản phẩm
+                </th>
+                <th>
+                    Số lượng sản phẩm
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ProductName
+                    </td>
+                    <td>
+                        @string.Format("{0:#,##0 VNĐ}", item.Price)
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <span>Tổng số lượng: </span> <strong>@ViewBag.TOTAL_QUANTITY</strong>
+        <br />
+        <span>Tổng tiền: </span> <strong>@string.Format("{0:#,##0 VNĐ}", ViewBag.TOTAL_PRICE_ALL)</strong>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnPrint").click(function () {
+                window.print();
+            });
+        });
+    </script>
+}

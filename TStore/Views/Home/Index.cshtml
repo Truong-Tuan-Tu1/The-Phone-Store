@@ -1,0 +1,76 @@
+@model List<Product>;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container">
+    <section class="wrapper-sliders mb-5">
+        <div class="sliders">
+            <a href="#" class="sidler-home__item">
+                <img src="/images/slider.png" alt="" class="img-fluid">
+            </a>
+
+            <div class="slider-controls">
+                <button class="slider-control" data-position="left">
+                    <i class="bi bi-arrow-left-circle"></i>
+                </button>
+                <button class="slider-control" data-position="right">
+                    <i class="bi bi-arrow-right-circle"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <vc:slide-accessory></vc:slide-accessory>
+   
+    <vc:product-home></vc:product-home>
+
+    <section class="wrapper-suport mb-5">
+        <h2 class="title-highlight wrapper-home__title">
+            Hỗ trợ tại đây. 
+            <span>Ngay khi bạn muốn, mọi việc bạn cần. </span>
+        </h2>
+
+        <div class="wrapper-product">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-product-primary card-product-primary-height-custom shadown-secondary ">
+                        <div class="card-product-primary__header">
+                            <h4 class="card-product-primary__title">NHẬN HỖ TRỢ QUA MAIL</h4>
+                            <h3 class="card-product-primary__sub-title">
+                                <a href="#">
+                                    Tư vấn mua hàng từ các chuyên gia mua sắm
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="card-product-primary__body">
+                            <img src="/images/user1.webp" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-product-primary card-product-primary-height-custom shadown-secondary ">
+                        <div class="card-product-primary__header">
+                            <h4 class="card-product-primary__title">NHẬN HỖ TRỢ QUA MAIL</h4>
+                            <h3 class="card-product-primary__sub-title">
+                                <a href="#">
+                                    Tư vấn mua hàng từ các chuyên gia mua sắm
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="card-product-primary__body">
+                            <img src="/images/product-2.png" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <vc:slide-accessory-bottom></vc:slide-accessory-bottom>
+   
+</div>
+
+                                    

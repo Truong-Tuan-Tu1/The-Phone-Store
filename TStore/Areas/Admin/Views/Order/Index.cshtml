@@ -1,0 +1,33 @@
+﻿ @model IEnumerable<Orders> 
+
+<h1 class="text-center">
+    Đơn hàng
+</h1>
+
+<table class="table table-striped table-hover table-image">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Thời gian đặt hàng</th>
+            <th >
+                Chức năng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @o.Id
+                </th>
+                <th>
+                    @string.Format("{0:dd/MM/yyyy}", o.CreatedAt)
+                </th>
+                <th>
+                    <a class="btn btn-info" asp-route-id="@o.Id" asp-action="Detail" >Xem chi tiết</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>

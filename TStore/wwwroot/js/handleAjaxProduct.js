@@ -1,0 +1,159 @@
+$(document).ready(function () {
+    getAllProduct();
+
+    const txtSearchProduct = document.getElementById("txtSearchProduct");
+    var delayTimer;
+    txtSearchProduct.oninput = function (e) {
+        const categoryId = $("#ddlCategory").val();
+        const brandId = $("#ddlBrand").val();
+        const supplierId = $("#ddlSupplier").val();
+        const searchKey = txtSearchProduct.value;
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function () {
+            getAllProduct(categoryId, brandId, supplierId, searchKey);
+        }, 700);
+    }
+
+    $("#ddlCategory, #ddlBrand, #ddlSupplier").on("change", function () {
+        const categoryId = $("#ddlCategory").val();
+        const brandId = $("#ddlBrand").val();
+        const supplierId = $("#ddlSupplier").val();
+        const searchKey = txtSearchProduct.value;
+
+        getAllProduct(categoryId, brandId, supplierId, searchKey);
+    });
+
+
+
+})
+
+const getAllProduct = (categoryId, brandId, supplierId, key = "") => {
+    $.ajax({
+        type: "GET",
+        url: `/Admin/Product/GetAllProduct?name=${key}&categoryId=${categoryId}&brandId=${brandId}&supplierId${supplierId}`,
+
+        success: function (res) {
+            let htmlResult = "";
+
+            if (res.length <= 0) {
+                htmlResult += `
+                
+                <tr>
+                    <td colspan="8">
+                        Danh sách rỗng 	&nbsp;	&nbsp;
+                        <a href="/Admin/Product/Create" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i>
+                            Tạo sản phẩm mới ?</a>
+                    </td>
+                </tr>
+                
+                `
+            }
+
+            res.forEach((item) => {
+                htmlResult += `
+                    <tr>
+                        <th style="line-height: 48px" scope="row">${item.id}</th>
+                        <td style="line-height: 48px" title="${item.productName}">${item.productName.length > 12 ? item.productName.substring(0, 18) + "..." : item.productName}</td>
+                        <td style="line-height: 48px" >${handleConvertNumberToMoney(item.price, "VND")}</td>
+                        <td style="line-height: 48px" >${handleConvertNumberToMoney(item.quantity)}</td>
+                        <td >
+                            <img class="img-fluid" style="width: 48px;height: 48px;object-fit: cover;object-position: center;" src="${item.thumbnailFilePath}" alt="${item.seoName}">
+                        </td>
+                        <td style="line-height: 48px" ><button data-id="${item.id}" class="btnIsHome ${item.isHot ? "active" : ""}">${item.isHot ? '<i style="color: blue; font-size: 20px;" class="bi bi-check"></i>' : '<i style="color: red; font-size: 20px;" class="bi bi-x"></i>'}</button></td>
+                        <td style="line-height: 48px">
+                            <a class="btn btn-danger btn-sm" data-id="${item.id}" onclick="deleteProduct(${item.id})">
+                                <i class="bi bi-x-circle"></i>
+                                Xóa
+                            </a>
+                            <a  href="/Admin/Product/Edit?id=${item.id}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                                Chỉnh sửa</a>
+                        </td>
+                    </tr>
+                `
+            })
+            $("#tblProducts").html(htmlResult);
+
+        },
+        error: function (err) {
+        }
+    })
+}
+
+const deleteProduct = (idProduct) => {
+
+    Swal.fire({
+        title: "Xóa ?",
+        text: 'Bạn chắc chắn xóa sản phẩm này chứ. Nó sẽ bị xóa vĩnh viễn',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Đồng ý!',
+        cancelButtonText: 'Thoát'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: `/Admin/Product/Delete?id=${idProduct}`,
+                success: function (res) {
+                    const categoryId = $("#ddlCategory").val();
+                    const brandId = $("#ddlBrand").val();
+                    const supplierId = $("#ddlSupplier").val();
+                    const searchKey = txtSearchProduct.value;
+                    getAllProduct(categoryId, brandId, supplierId, searchKey);
+                    Swal.fire(
+                        'Đã xóa!',
+                        'Xóa thành công!',
+                        'success'
+                    )
+                },
+                error: function (err) {
+                    Swal.fire(
+                        'Xóa thất bại!',
+                        'Xóa thất bại vui lòng thử lại!',
+                        'error'
+                    )
+                }
+            })
+        }
+    });
+
+
+}
+
+
+$(document).on("click", ".btnIsHome", function () {
+    const _this = this;
+    if (!$(_this).hasClass("active")) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Product/UpdateActionIsHot",
+            data: {
+                id: $(this).data("id"),
+                isHot: true
+            },
+            success: function (res) {
+                $(_this).addClass("active");
+                $(_this).html(`<i style="color: blue; font-size: 20px;" class="bi bi-check"></i>`);
+            }
+            
+        })
+
+
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Product/UpdateActionIsHot",
+            data: {
+                id: $(this).data("id"),
+                isHot: false
+            },
+            success: function (res) {
+                $(_this).html(`<i style="color: red; font-size: 20px;" class="bi bi-x"></i>`);
+                $(_this).removeClass("active");
+            }
+        })
+    }
+})

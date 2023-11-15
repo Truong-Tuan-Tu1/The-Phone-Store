@@ -1,0 +1,79 @@
+@{
+     ViewData["Title"] = "Product Categories";
+}
+
+<div class="container">
+    <section class="text-center">
+        <h2>Categories</h2>
+        <hr>
+        <div class="mt-4">
+            <table id="tblProductCategory" class="table table-striped w-100 tb-center table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#Id</th>
+                        <th scope="col">Tên danh mục</th>
+                        <th scope="col">Ảnh đại diện</th>
+                        <th scope="col" >Ngày tạo</th>
+                        <th scope="col" >Ngày sửa đổi</th>
+                        <th scope="col" >Chức năng</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        $("#tblProductCategory").DataTable(
+            {
+                info: false,
+                ajax: "/Admin/ProductCategory/GetAllProductCategories",
+                columns: [
+                    {
+                        data: "id"
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "thumbnailFilePath",
+                        render: function(data, type) {
+                            if(type === "display") {
+                                return `<td><img class="img-fluid" style="width: 48px;height: 48px;object-fit: cover;object-position: center;" src="${data}"></td>`
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: "createdAt",
+                        render: function(data, type) {
+                            return `<td>
+                                ${new Date(data).toLocaleDateString()}
+                            </td>`
+                        }
+                    },
+                    {
+                        data: "updatedAt",
+                        render: function(data, type) {
+                            return `<td>
+                                ${new Date(data).toLocaleDateString()}
+                            </td>`
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function(data, type) {
+                            return `<td>
+                                <a  href='/Admin/ProductCategories/Edit?id=${data}'  class="btn btn-primary btn-sm">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Chỉnh sửa</a>
+                                <a href='#' class='btn btn-danger btn-sm' onclick='return handleDeleteAlert({deleteLink: "/Admin/ProductCategories/Delete?id=${data}", redirectLink: "/Admin/ProductCategories"})' >Xóa</a>
+                            </td>`;
+                        }
+                    },
+                ]
+            }
+        )
+    </script>
+}
